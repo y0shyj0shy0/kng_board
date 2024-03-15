@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/basic.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <meta charset="UTF-8">
+        <title>나의 게시판</title>
+    </head>
+
+    <body>
+        <header>
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+             <h1><a href="/">우리게시판</a></h1>
+             <div class="btns">
+                <a href="/login">로그인</a>
+             </div>
+        </header>
+        <section>
+            <div class="inner">
+                <h1>나의 게시판</h1>
+                <div class="board">
+                    <div class="post_header">
+                        <div class="header_title">
+                            <div class="post_title"><%=post.title%></div>
+                            <div class="post_date"><%=post.date%></div>
+                        </div>
+                        <div class="header_user">
+                            <span class="material-symbols-outlined">person</span>
+                            username
+                        </div>
+                        
+                    </div>
+                    <div class="post_content">
+                        <%=post.content%>
+                    </div>
+                </div>
+                <div class="btns">
+                    <a href="/">삭제</a>
+                    <a href="/">목록</a>
+                </div>
+                <div class="comments_in">
+                    <div class="comment">
+                        <h3>댓글</h3>
+                        <form action="/views?id=<%=postId%>" id="commentform" method="post">
+                            <input type="text" name="comment_input" id="comment_input" style="width:700px;">
+                            <% for (let i = 0; i < cmts.length; i++) { %>
+                                <div class="item">
+                                    <div class="content">
+                                        <div class="user">
+                                            <span class="material-symbols-outlined">person</span>
+                                            username
+                                        </div>
+                                        <div class="cmtText"><%=cmts[i].content%></div>
+                                    </div>
+                                    <div class="date"><%=cmts[i].date%></div>
+                                </div>      
+                            <% } %>
+                        </form>
+                        
+                       
+                    </div>
+                    <div class="co_button">
+                        <button onclick="submitData();">등록</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <script>
+            function submitData() {
+                let comment_in = document.getElementById('comment_input');
+                console.log('input: '+comment_in);
+                if (comment_in.value == '') {
+                    alert("댓글을 입력하세요.");
+                }
+                else {
+                    let dom = document.getElementById("commentform");
+                    dom.submit();
+                }
+            }
+        </script>
+    </body>
+</html>

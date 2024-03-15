@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/basic.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta charset="UTF-8">
+        <title>나의 게시판</title>
+    </head>
+
+    <body>
+        <header>
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+             <h1><a href="/">우리게시판</a></h1>
+             <div class="btns">
+                <a href="/login">로그인</a>
+             </div>
+        </header>
+        <section>
+            <div class="inner">
+                <h1>나의 게시판</h1>
+                <div class="board">
+                    <div class="row_title">
+                        <div class="col title">
+                            제목
+                        </div>
+                        <div class="col user">
+                            글쓴이
+                        </div>
+                        <div class="col date">
+                            날짜
+                        </div>
+                    </div>
+                    <% for (var i = 0; i < cnt; i++) { %>
+                        <a href="/views?id=<%=datas[i].id%>" class="row_item">
+                            <div class="item title ellipsis"><%=datas[i].title%></div>
+                            <div class="item user">asd</div>
+                            <div class="item date"><%=datas[i].date%></div>
+                        </a>
+                    <% } %>
+                   
+                </div>
+                <div class="btns">
+                    <a href="write">쓰기</a>
+                </div>
+                <div class="pages">
+                    <a href="/?page=<%=prevPage%>"><<</a>
+                    <% for (let i = 1; i <= maxPage; i++) { %>
+                        <% if (maxPage >= 10) { %>
+                            <% break; %>
+                        <% } %>
+                        <a href="/?page=<%=i%>"><%=i%></a>
+                    <% } %>
+                    <a href="/?page=<%=nextPage%>">>></a>
+                </div>
+            </div>
+        </section>
+        <footer>
+            Copyright 2024.
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/basic.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta charset="UTF-8">
+        <title>나의 게시판</title>
+    </head>
+
+    <body>
+        <header>
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+             <h1><a href="/">우리게시판</a></h1>
+             <div class="btns">
+                <a href="">로그인</a>
+             </div>
+        </header>
+        <section>
+            <div class="inner">
+                <h1>로그인</h1>
+                <div class="loginform">
+                    <form action="/login" id="lgnform" method="post">
+                        <div class="login ID">
+                            <input id="inputID" name="inputID" type="text" maxlength="20" placeholder="아이디를 입력해 주세요.">
+                         </div>
+                         <div class="login PW">
+                             <input id="inputPW" name="inputPW" type="password" maxlength="20" placeholder="비밀번호를 입력해 주세요.">
+                         </div>
+                    </form>
+                    <div class="loginbtn">
+                        <button onclick="submitData();">로그인</button>
+                     </div>
+                     <div class="find">
+                        <a href="">아이디 찾기</a>
+                        <a href="">비밀번호 찾기</a>
+                        <a href="">회원가입</a>
+                     </div>
+                </div>
+                
+            </div>
+
+        </section>
+
+        <script>
+            function submitData() {
+                let id_in = document.getElementById("inputID");
+                let pw_in = document.getElementById("inputPW");
+                if (id_in.value == '' || pw_in.value == '') {
+                    alert("아이디 및 비밀번호를 입력하세요.");
+                }
+                
+                else {
+                    let dom = document.getElementById("lgnform");
+                    dom.submit();
+                }
+            }
+        </script>
+        
+    </body>
+    
+</html>

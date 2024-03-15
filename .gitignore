@@ -1,0 +1,16 @@
+/.bash_history
+/.bash_logout
+/.bash_profile
+/.bashrc
+/.cache
+/.config
+/.mozilla
+/.mysql_history
+/.npm
+/.pki
+/.ssh
+/.viminfo
+/.vscode-server
+/node_modules
+/package-lock.json
+/package.json
