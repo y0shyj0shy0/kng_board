@@ -8,11 +8,20 @@
 
     <body>
         <header>
-            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
-             <h1><a href="/">우리게시판</a></h1>
-             <div class="btns">
-                <a href="/login">로그인</a>
-             </div>
+            <div class="logo">
+                <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+            </div>
+            <div class="mainBtn">
+                <h1><a href="/">우리게시판</a></h1>
+            </div>
+            <div class="navi">
+                <%if (isUser) { %>
+                    <a href=""><%=nickname%>님</a>
+                    <a href="/logout">로그아웃</a>
+                <% } else { %>
+                    <a href="/login">로그인</a>
+                <% } %>
+            </div>
         </header>
         <section>
             <div class="inner">
@@ -32,14 +41,18 @@
                     <% for (var i = 0; i < cnt; i++) { %>
                         <a href="/views?id=<%=datas[i].id%>" class="row_item">
                             <div class="item title ellipsis"><%=datas[i].title%></div>
-                            <div class="item user">asd</div>
+                            <div class="item user"><%=datas[i].nickname%></div>
                             <div class="item date"><%=datas[i].date%></div>
                         </a>
                     <% } %>
                    
                 </div>
                 <div class="btns">
-                    <a href="write">쓰기</a>
+                    <%if (isUser) { %>
+                        <a href="write">쓰기</a>
+                    <%} else { %>
+                        <a href="javascript:alert('로그인 후 사용 가능합니다.');">쓰기</a>
+                    <%}%>
                 </div>
                 <div class="pages">
                     <a href="/?page=<%=prevPage%>"><<</a>

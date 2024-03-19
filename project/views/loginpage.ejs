@@ -8,11 +8,20 @@
 
     <body>
         <header>
-            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
-             <h1><a href="/">우리게시판</a></h1>
-             <div class="btns">
-                <a href="">로그인</a>
-             </div>
+            <div class="logo">
+                <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+            </div>
+            <div class="mainBtn">
+                <h1><a href="/">우리게시판</a></h1>
+            </div>
+            <div class="navi">
+                <%if (isUser) { %>
+                    <a href=""><%=nickname%>님</a>
+                    <a href="/logout">로그아웃</a>
+                <% } else { %>
+                    <a href="">로그인</a>
+                <% } %>
+            </div>
         </header>
         <section>
             <div class="inner">
@@ -32,7 +41,7 @@
                      <div class="find">
                         <a href="">아이디 찾기</a>
                         <a href="">비밀번호 찾기</a>
-                        <a href="">회원가입</a>
+                        <a href="/register">회원가입</a>
                      </div>
                 </div>
                 

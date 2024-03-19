@@ -9,11 +9,20 @@
 
     <body>
         <header>
-            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
-             <h1><a href="/">우리게시판</a></h1>
-             <div class="btns">
-                <a href="/login">로그인</a>
-             </div>
+            <div class="logo">
+                <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+            </div>
+            <div class="mainBtn">
+                <h1><a href="/">우리게시판</a></h1>
+            </div>
+            <div class="navi">
+                <%if (isUser) { %>
+                    <a href=""><%=nickname%>님</a>
+                    <a href="/logout">로그아웃</a>
+                <% } else { %>
+                    <a href="/login">로그인</a>
+                <% } %>
+            </div>
         </header>
         <section>
             <div class="inner">
@@ -26,7 +35,7 @@
                         </div>
                         <div class="header_user">
                             <span class="material-symbols-outlined">person</span>
-                            username
+                            <%=post.nickname%>
                         </div>
                         
                     </div>
@@ -48,7 +57,7 @@
                                     <div class="content">
                                         <div class="user">
                                             <span class="material-symbols-outlined">person</span>
-                                            username
+                                            <%=cmts[i].nickname%>
                                         </div>
                                         <div class="cmtText"><%=cmts[i].content%></div>
                                     </div>
@@ -60,7 +69,11 @@
                        
                     </div>
                     <div class="co_button">
-                        <button onclick="submitData();">등록</button>
+                        <%if (isUser) {%>
+                            <button onclick="submitData();">등록</button>
+                        <%} else {%>
+                            <button onclick="alert('로그인 후 사용 가능합니다.');">등록</button>
+                        <%}%>
                     </div>
                 </div>
             </div>
