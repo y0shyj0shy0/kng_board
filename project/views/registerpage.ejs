@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/basic.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <meta charset="UTF-8">
+        <title>나의 게시판</title>
+    </head>
+
+    <body>
+        <header>
+            <div class="logo">
+                <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+            </div>
+            <div class="mainBtn">
+                <h1><a href="/">우리게시판</a></h1>
+            </div>
+            <div class="navi">
+                <%if (isUser) { %>
+                    <a href=""><%=nickname%>님</a>
+                    <a href="/logout">로그아웃</a>
+                <% } else { %>
+                    <a href="">로그인</a>
+                <% } %>
+            </div>
+        </header>
+        <section>
+            <div class="inner">
+                <div class="registform">
+                    <form action="/register" id="regform" method="post">
+                        <div class="reg ID">
+                            <input id="registID" name="registID" type="text" minlength="6" maxlength="20" placeholder="아이디">
+                         </div>
+                         <div id="idText"><font size="3">영문, 숫자 조합 6~15자 이내</font></div>
+                         <div class="reg PW">
+                             <input id="registPW" name="registPW" type="password" minlength="6" maxlength="20" placeholder="비밀번호">
+                         </div>
+                         <div id="pwText"><font size="3">영문, 숫자, 특수문자 조합 6~15자 이내</font></div>
+                         <div class="reg PW2">
+                            <input id="registPW2" name="registPW2" type="password" minlength="6" maxlength="20" placeholder="비밀번호 재입력">
+                         </div>
+                         <div class="reg nickname">
+                            <input id="registNick" name="registNick" onclick="matchPW();" onfocus="matchPW();" type="text" maxlength="15" placeholder="닉네임">
+                         </div>
+                    </form>
+                    <div class="regbtn">
+                        <button onclick="submitData();">회원가입</button>
+                     </div>
+                </div>
+            </div>
+
+        </section>
+
+        <script>
+            function submitData() {
+                let regID = document.getElementById("registID");
+                let regPW = document.getElementById("registPW");
+                let regNick = document.getElementById("registNick");
+
+                if (regID.value == '' || regPW.value == '' || regNick.value == '') {
+                    alert("모두 입력하셔야 합니다.");
+                }
+                else {
+                    if(matchPW()) {
+                        let dom = document.getElementById("regform");
+                        dom.submit();
+                    }
+                    else {
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                }
+            }
+            function matchPW() {
+                let regPW1 = document.getElementById("registPW");
+                let regPW2 = document.getElementById("registPW2");
+                const text = document.getElementById("pwText");
+                if (regPW1.value == regPW2.value) {
+                    text.innerHTML = '<font size="3" font color="blue">비밀번호가 일치합니다.</font>';
+                    return 1;
+                }
+                else {
+                    text.innerHTML = '<font size="3" font color="red">비밀번호가 일치하지 않습니다.</font>';
+                    return 0;
+                }
+            }
+        </script>
+        
+    </body>
+    
+</html>
