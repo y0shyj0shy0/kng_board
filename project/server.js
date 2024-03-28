@@ -125,12 +125,11 @@ app.get('/views', (req, res) => {
                 "cmts": cmtDatas,
                 "postId": postId,
                 "isUser": isUser,
-                "nickname": req.session.nickname
+                "curNickname": req.session.nickname
             });
         });
         
     });
-
 });
 
 app.post('/views', (req, res) => {
@@ -287,3 +286,17 @@ app.post('/register', (req, res) => {
     
     
 });
+
+app.get('/delete', (req, res) => {
+    let postId = req.query.id;
+    console.log('req query : '+req.query.id);
+    dbConnect.query('delete from post where post_id=?', [postId], (error) => {
+        if (error) throw error;
+        res.send(`
+            <script>
+            alert('삭제되었습니다.');
+            document.location.href='/';
+            </script>
+        `);
+    })
+})

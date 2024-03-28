@@ -17,7 +17,7 @@
             </div>
             <div class="navi">
                 <%if (isUser) { %>
-                    <a href=""><%=nickname%>님</a>
+                    <a href=""><%=curNickname%>님</a>
                     <a href="/logout">로그아웃</a>
                 <% } else { %>
                     <a href="/login">로그인</a>
@@ -44,7 +44,9 @@
                     </div>
                 </div>
                 <div class="btns">
-                    <a href="/">삭제</a>
+                    <% if (isUser && post.nickname == curNickname) { %>
+                        <a href="/delete?id=<%=postId%>">삭제</a>
+                    <% } %>
                     <a href="/">목록</a>
                 </div>
                 <div class="comments_in">
