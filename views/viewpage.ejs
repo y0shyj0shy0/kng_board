@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 게시판</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+        </div>
+        <div class="mainBtn">
+            <h1><a href="/">우리게시판</a></h1>
+        </div>
+        <div class="navi" id="navi"></div>
+    </header>
+    <section>
+        <div class="inner">
+            <h1>나의 게시판</h1>
+            <div class="board">
+                <div class="post_header">
+                    <div class="header_title">
+                        <div class="post_title" id="post-title"></div>
+                        <div class="post_date" id="post-date"></div>
+                    </div>
+                    <div class="header_user">
+                        <span class="material-symbols-outlined">person</span>
+                        <span id="post-nickname"></span>
+                    </div>
+                </div>
+                <div class="post_content" id="post-content"></div>
+            </div>
+            <div class="btns" id="post-buttons">
+                <a href="/">목록</a>
+            </div>
+            <div class="like">
+                <h3 id="post-like"></h3>
+                <a id="like-link" href="#">
+                    <img src="/images/like2.png" style="width:40px;height:40px;">
+                </a>
+            </div>
+            <div class="comments_in">
+                <div class="comment">
+                    <h3>댓글</h3>
+                    <form action="/views" id="commentform" method="post">
+                        <input type="hidden" name="postId" id="postId">
+                        <input type="text" name="comment_input" id="comment_input" style="width:700px;">
+                    </form>
+                    <div id="comments-list"></div>
+                </div>
+                <div class="co_button" id="comment-button"></div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            $.get(`/api/post/${postId}`, function(data) {
+                if (data.isUser) {
+                    $("#navi").html(`<a href="#">${data.curNickname}님</a> <a href="/logout">로그아웃</a>`);
+                } else {
+                    $("#navi").html('<a href="/login">로그인</a>');
+                }
+
+                $("#post-title").text(data.post.title);
+                $("#post-date").text(data.post.date);
+                $("#post-nickname").text(data.post.nickname);
+                $("#post-content").html(data.post.content);
+                $("#post-like").text(data.post.like);
+                $("#like-link").attr("href", `/like?id=${data.post.id}`);
+                $("#postId").val(data.post.id);
+            
+                if (data.isUser && data.post.nickname === data.curNickname) {
+                    $("#post-buttons").prepend(`<a href="/delete?id=${data.post.id}">삭제</a>`);
+                }
+
+                data.comments.forEach(cmt => {
+                    let commentHtml = `
+                        <div class="item">
+                            <div class="content">
+                                <div class="user">
+                                    <span class="material-symbols-outlined">person</span>
+                                    ${cmt.nickname}
+                                </div>
+                                <div class="cmtText">${cmt.content}</div>
+                            </div>
+                            <div class="date">${cmt.date}</div>
+                            ${data.isUser && cmt.nickname === data.curNickname ? `<div class="del_button"><button onclick="location.href='/cmt_delete?id=${data.post.id}&cmtid=${cmt.id}'">삭제</button></div>` : ''}
+                        </div>
+                    `;
+                    $("#comments-list").append(commentHtml);
+                });
+
+                if (data.isUser) {
+                    $("#comment-button").html('<button id="comment-submit-btn">등록</button>');
+                } else {
+                    $("#comment-button").html('<button onclick="alert(\'로그인 후 사용 가능합니다.\');">등록</button>');
+                }
+
+                $('#comment-submit-btn').click(function() {
+                    let comment_in = $("#comment_input").val();
+                    if (comment_in === '') {
+                        alert("댓글을 입력하세요.");
+                    } else {
+                        $("#commentform").submit();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
