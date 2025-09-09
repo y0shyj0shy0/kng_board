@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>나의 게시판</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+        </div>
+        <div class="mainBtn">
+            <h1><a href="/">우리게시판</a></h1>
+        </div>
+        <div class="navi">
+            <span id="user-info"></span>
+        </div>
+    </header>
+    <section>
+        <div class="inner">
+            <div class="registform">
+                <form action="/register" id="regform" method="post">
+                    <div class="reg ID">
+                        <input id="registID" name="registID" type="text" minlength="6" maxlength="20" placeholder="아이디">
+                    </div>
+                    <div id="idText"><font size="3">영문, 숫자 조합 6~15자 이내</font></div>
+                    <div class="reg PW">
+                        <input id="registPW" name="registPW" type="password" minlength="6" maxlength="20" placeholder="비밀번호">
+                    </div>
+                    <div id="pwText"><font size="3">영문, 숫자, 특수문자 조합 6~15자 이내</font></div>
+                    <div class="reg PW2">
+                        <input id="registPW2" name="registPW2" type="password" minlength="6" maxlength="20" placeholder="비밀번호 재입력">
+                    </div>
+                    <div class="reg nickname">
+                        <input id="registNick" name="registNick" type="text" maxlength="15" placeholder="닉네임">
+                    </div>
+                </form>
+                <div class="regbtn">
+                    <button id="registerBtn">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function() {
+            let isUser = <%= JSON.stringify(isUser) %>;
+            
+
+            $('#registerBtn').click(function() {
+                let regID = $("#registID").val();
+                let regPW = $("#registPW").val();
+                let regNick = $("#registNick").val();
+
+                if (regID === '' || regPW === '' || regNick === '') {
+                    alert("모두 입력하셔야 합니다.");
+                } else {
+                    if (matchPW()) {
+                        $("#regform").submit();
+                    } else {
+                        alert('비밀번호가 일치하지 않습니다.');
+                    }
+                }
+            });
+
+            function matchPW() {
+                let regPW1 = $("#registPW").val();
+                let regPW2 = $("#registPW2").val();
+                if (regPW1 === regPW2) {
+                    $("#pwText").html('<font size="3" color="blue">비밀번호가 일치합니다.</font>');
+                    return true;
+                } else {
+                    $("#pwText").html('<font size="3" color="red">비밀번호가 일치하지 않습니다.</font>');
+                    return false;
+                }
+            }
+
+            $("#registPW, #registPW2").on('input', matchPW);
+        });
+    </script>
+</body>
+</html>

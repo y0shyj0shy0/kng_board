@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>나의 게시판</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/"><img src="/images/샤넬로고4.jpg" style="width:80px;height:80px;"></a>
+        </div>
+        <div class="mainBtn">
+            <h1><a href="/">우리게시판</a></h1>
+        </div>
+        <div class="navi">
+            <span id="user-info"></span>
+        </div>
+    </header>
+    <section>
+        <div class="inner">
+            <h1>나의 게시판</h1>
+            <div class="board">
+                <div class="row_title">
+                    <div class="col title">제목</div>
+                    <div class="col user">글쓴이</div>
+                    <div class="col date">날짜</div>
+                </div>
+                <div id="board-items"></div>
+            </div>
+            <div class="btns">
+                <a id="write-btn" href="#">쓰기</a>
+            </div>
+            <div class="pages">
+                <a id="prev-page" href="#"><<</a>
+                <span id="page-numbers"></span>
+                <a id="next-page" href="#">>></a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        Copyright 2024.
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            function loadPage(page) {
+                $.getJSON(`/api/posts?page=${page}`, function(data) {
+                    const { isUser, nickname, posts, prevPage, nextPage, maxPage, currentPage } = data;
+                    $('#user-info').html(isUser ? `<a href="#">${nickname}님</a> <a href="/logout">로그아웃</a>` : '<a href="/login">로그인</a>');
+
+                    $('#board-items').empty();
+                    posts.forEach(post => {
+                        $('#board-items').append(`
+                            <a href="/views?id=${post.id}" class="row_item">
+                                <div class="item title ellipsis">${post.title}</div>
+                                <div class="item user">${post.nickname}</div>
+                                <div class="item date">${post.date}</div>
+                            </a>
+                        `);
+                    });
+
+                    $('#write-btn').attr('href', isUser ? 'write' : 'javascript:alert("로그인 후 사용 가능합니다.");');
+                    $('#prev-page').attr('href', `#`).data('page', prevPage);
+                    $('#next-page').attr('href', `#`).data('page', nextPage);
+                    
+                    $('#page-numbers').empty();
+                    for (let i = 1; i <= maxPage; i++) {
+                        if (maxPage >= 10) break;
+                        $('#page-numbers').append(`<a href="#" class="page-link" data-page="${i}">${i}</a> `);
+                    }
+                });
+            }
+
+            loadPage(1);
+
+            $(document).on('click', '.page-link', function(e) {
+                e.preventDefault();
+                const page = $(this).data('page');
+                loadPage(page);
+            });
+
+            $('#prev-page').click(function(e) {
+                e.preventDefault();
+                const page = $(this).data('page');
+                loadPage(page);
+            });
+
+            $('#next-page').click(function(e) {
+                e.preventDefault();
+                const page = $(this).data('page');
+                loadPage(page);
+            });
+        });
+    </script>
+</body>
+</html>
