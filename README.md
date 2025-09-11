@@ -39,7 +39,10 @@
   - JSON 응답: 게시글 + 댓글 목록  
 
 ---
+## 게시판 이미지
+<img width="628" height="495" alt="myboard" src="https://github.com/user-attachments/assets/891437df-a187-4832-a031-831a339b3a27" />
 
+---
 ## 데이터베이스 구조 (예시)  
 
 ```sql
