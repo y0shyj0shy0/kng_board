@@ -41,6 +41,9 @@
 ---
 ## 게시판 이미지
 <img width="628" height="495" alt="myboard" src="https://github.com/user-attachments/assets/891437df-a187-4832-a031-831a339b3a27" />
+<img width="1576" height="735" alt="image" src="https://github.com/user-attachments/assets/a63e2a75-2484-4dfa-a6e7-c02bf0f32a38" />
+<img width="1368" height="747" alt="image" src="https://github.com/user-attachments/assets/f33eb13e-7fdb-41aa-bd12-6303661aabcb" />
+
 
 ---
 ## 데이터베이스 구조 (예시)  
